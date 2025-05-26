@@ -1,0 +1,112 @@
+version: 2
+
+models:
+  - name: stg_pokemon
+    description: "Staging table for core Pokémon data"
+    columns:
+      - name: name
+        tests:
+          - not_null
+          - unique
+      - name: height
+        tests:
+          - not_null
+      - name: weight
+        tests:
+          - not_null
+
+  - name: stg_pokemon_species
+    description: "Staging table for species metadata"
+    columns:
+      - name: pokemon_id
+        tests:
+          - not_null
+          - unique
+      - name: is_legendary
+        tests:
+          - not_null
+      - name: generation
+        tests:
+          - not_null
+
+  - name: stg_pokemon_stats
+    description: "Staging table for Pokémon base stats"
+    columns:
+      - name: pokemon_id
+        tests:
+          - not_null
+      - name: stat_name
+        tests:
+          - not_null
+      - name: base_stat
+        tests:
+          - not_null
+
+  - name: stg_pokemon_moves
+    description: "Staging table for all Pokémon moves"
+    columns:
+      - name: id
+        tests:
+          - not_null
+          - unique
+      - name: name
+        tests:
+          - not_null
+      - name: power
+        tests:
+          - not_null
+
+  - name: stg_pokemon_move_links
+    description: "Links Pokémon to available moves"
+    columns:
+      - name: pokemon_id
+        tests:
+          - not_null
+      - name: move_id
+        tests:
+          - not_null
+
+  - name: stg_pokemon_moves_used
+    description: "Final mapping of Pokémon to moves with metadata"
+    columns:
+      - name: pokemon_id
+        tests:
+          - not_null
+      - name: move_id
+        tests:
+          - not_null
+      - name: level_learned_at
+        tests:
+          - not_null
+
+  - name: stg_pokemon_types
+    description: "Staging Pokémon type data"
+    columns:
+      - name: pokemon_id
+        tests:
+          - not_null
+      - name: type
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['normal', 'fire', 'water', 'electric', 'grass', 'ice', 'fighting', 'poison', 'ground', 'flying', 'psychic', 'bug', 'rock', 'ghost', 'dragon', 'dark', 'steel', 'fairy']
+
+  - name: stg_pokemon_abilities
+    description: "Staging Pokémon abilities"
+    columns:
+      - name: pokemon_id
+        tests:
+          - not_null
+      - name: ability
+        tests:
+          - not_null
+
+  - name: stg_pokemon_location
+    description: "Where Pokémon can be found"
+    columns:
+      - name: pokemon_id
+        tests:
+          - not_null
+      - name: location_area
+        tests:
+          - not_null
